@@ -1,0 +1,408 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
+  --color-paper: #eef1ee;
+  --color-mist: #e1e7e2;
+  --color-ink: #1c2621;
+  --color-ink-soft: #44514b;
+  --color-moss: #2c5348;
+  --color-line: #c5d0c8;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  interpolate-size: allow-keywords;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: rgb(44 83 72 / 16%);
+}
+
+::selection {
+  background: var(--color-moss);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-moss);
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: 6.25rem;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-on-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  max-width: 100%;
+  padding: 0.7rem 1.35rem;
+  font-family: var(--font-outfit), "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 120ms ease;
+}
+
+.btn-primary {
+  background: var(--color-moss);
+  color: var(--color-paper);
+}
+
+.btn-primary:hover {
+  background: var(--color-ink);
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-moss);
+  background: transparent;
+  color: var(--color-moss);
+}
+
+.btn-secondary:hover {
+  background: var(--color-mist);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.btn-on-dark {
+  border: 1px solid color-mix(in srgb, var(--color-paper) 45%, transparent);
+  background: transparent;
+  color: var(--color-paper);
+}
+
+.btn-on-dark:hover {
+  background: var(--color-paper);
+  border-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.btn-primary:active,
+.btn-secondary:active,
+.btn-on-dark:active {
+  transform: scale(0.98);
+}
+
+.hero-image {
+  animation: hero-arrival 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-brand {
+  animation: copy-arrival 700ms 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-copy {
+  animation: copy-arrival 800ms 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-arrival {
+  from {
+    opacity: 0.72;
+    transform: scale(1.055);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes copy-arrival {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.image-reveal {
+  overflow: hidden;
+}
+
+/* Scroll-driven reveals. Content stays visible where the timeline is unsupported. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Ranges are lengths, not percentages, so tall and short blocks
+       reveal over the same scroll distance. */
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 300px;
+    }
+
+    .reveal-rule {
+      animation: reveal-extend linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 260px;
+      transform-origin: left center;
+    }
+  }
+}
+
+/* Fallback path driven by RevealMotion when view() timelines are missing. */
+.js-reveal .reveal,
+.js-reveal .reveal-rule,
+.js-reveal .image-reveal > img {
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    clip-path 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(1.75rem);
+}
+
+.js-reveal .reveal-rule {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.js-reveal .image-reveal > img {
+  clip-path: inset(7% 0 0 0);
+  opacity: 0.45;
+  transform: scale(1.025);
+}
+
+.js-reveal .reveal.is-revealed,
+.js-reveal .image-reveal > img.is-revealed {
+  clip-path: inset(0);
+  opacity: 1;
+  transform: none;
+}
+
+.js-reveal .reveal-rule.is-revealed {
+  transform: scaleX(1);
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-extend {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.everyday-card {
+  scroll-snap-stop: always;
+}
+
+.everyday-track {
+  scrollbar-color: var(--color-moss) transparent;
+  scrollbar-width: thin;
+  overscroll-behavior-inline: contain;
+}
+
+.everyday-track::-webkit-scrollbar {
+  height: 3px;
+}
+
+.everyday-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.everyday-track::-webkit-scrollbar-thumb {
+  background: var(--color-moss);
+}
+
+.everyday-photo {
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .everyday-card:hover .everyday-photo {
+    transform: scale(1.025);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .image-reveal > img {
+    animation: image-uncover linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 420px;
+  }
+}
+
+@keyframes image-uncover {
+  from {
+    clip-path: inset(7% 0 0 0);
+    opacity: 0.45;
+    transform: scale(1.025);
+  }
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+details summary {
+  list-style: none;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  touch-action: manipulation;
+  transition: color 180ms ease;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details summary::after {
+  content: "+";
+  color: var(--color-moss);
+  font-variant-numeric: tabular-nums;
+  transition:
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 180ms ease;
+}
+
+details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+details summary:hover {
+  color: var(--color-moss);
+}
+
+@supports selector(details::details-content) {
+  details::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 260ms ease,
+      content-visibility 420ms allow-discrete;
+  }
+
+  details[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+
+.faq-row {
+  transition: background-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq-row:hover {
+    background-color: color-mix(in srgb, var(--color-moss) 6%, transparent);
+  }
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  /* Sits just below the descenders regardless of the link's box height. */
+  bottom: calc(50% - 0.8em);
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (pointer: coarse) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-on-dark {
+    min-height: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 4rem;
+  }
+
+  .everyday-track {
+    scrollbar-width: auto;
+  }
+
+  .everyday-track::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 374px) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-on-dark {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-image,
+  .hero-brand,
+  .hero-copy,
+  .reveal,
+  .reveal-rule,
+  .image-reveal > img {
+    animation: none;
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+}
