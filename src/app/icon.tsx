@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const size = {
@@ -6,22 +8,28 @@ export const size = {
 };
 export const contentType = "image/png";
 
+const mark = readFileSync(
+  join(process.cwd(), "public", "logo-mark-bone.png"),
+).toString("base64");
+
 export default function Icon() {
   return new ImageResponse(
     <div
       style={{
         alignItems: "center",
-        background: "#1c2621",
-        color: "#eef1ee",
+        background: "#26372a",
         display: "flex",
-        fontFamily: "serif",
-        fontSize: 38,
         height: "100%",
         justifyContent: "center",
         width: "100%",
       }}
     >
-      H
+      <img
+        src={`data:image/png;base64,${mark}`}
+        alt=""
+        height={44}
+        width={24}
+      />
     </div>,
     size,
   );

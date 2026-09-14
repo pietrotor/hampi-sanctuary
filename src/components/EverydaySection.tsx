@@ -6,7 +6,7 @@ export function EverydaySection() {
   return (
     <section id={everyday.id} className="bg-paper px-5 py-20 sm:px-8 md:px-10 md:py-32">
       <div className="mx-auto max-w-350">
-        <h2 className="reveal max-w-3xl text-balance font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+        <h2 className="reveal max-w-3xl text-balance font-display text-4xl leading-[1.1] text-ink md:text-5xl">
           {everyday.headline}
         </h2>
         <ul
@@ -27,10 +27,10 @@ export function EverydaySection() {
                 />
               </div>
               <div className="pr-2">
-                <h3 className="font-display text-xl leading-snug text-ink md:text-2xl">
+                <h3 className="font-display text-2xl leading-snug text-ink md:text-3xl">
                   {category.title}
                 </h3>
-                <p className="mt-3 text-pretty font-sans text-base leading-7 text-ink-soft sm:leading-8">
+                <p className="mt-3 text-pretty font-body text-base leading-7 text-ink-soft sm:leading-8">
                   {category.body}
                 </p>
               </div>

@@ -7,21 +7,21 @@ export function DocumentarySection() {
   return (
     <section
       id={documentary.id}
-      className="bg-ink px-5 py-24 text-paper sm:px-8 md:px-10 md:py-36"
+      className="bg-deep px-5 py-24 text-paper sm:px-8 md:px-10 md:py-36"
     >
       <div className="mx-auto max-w-275">
         <div className="reveal">
-          <p className="font-display text-xl italic leading-[1.3] text-paper/70">
+          <p className="font-ui text-sm tracking-[0.14em] text-paper/65">
             {documentary.kicker}
           </p>
-          <h2 className="mt-4 max-w-3xl text-balance font-display text-3xl leading-[1.15] text-paper md:text-5xl">
+          <h2 className="mt-5 max-w-3xl font-display text-4xl leading-[1.1] text-paper md:text-6xl">
             {documentary.headline}
           </h2>
           <div className="mt-8 max-w-2xl space-y-5">
             {documentary.paragraphs.map((paragraph) => (
               <p
                 key={paragraph}
-                className="text-pretty font-sans text-base leading-8 text-paper/75 md:text-lg"
+                className="text-pretty font-body text-lg leading-8 text-paper/80 md:text-xl md:leading-9"
               >
                 {paragraph}
               </p>

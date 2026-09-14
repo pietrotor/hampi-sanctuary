@@ -9,10 +9,10 @@ export function ClosingSection() {
     >
       <div className="reveal mx-auto max-w-168">
         <span className="reveal-rule mb-14 block h-px w-full bg-line md:mb-20" />
-        <h2 className="text-balance font-display text-4xl leading-[1.1] text-ink md:text-6xl">
+        <h2 className="text-balance font-display text-5xl leading-[1.05] text-ink md:text-7xl">
           {closing.headline}
         </h2>
-        <p className="mt-8 max-w-152 text-pretty font-sans text-lg leading-8 text-ink-soft">
+        <p className="mt-8 max-w-152 text-pretty font-body text-lg leading-8 text-ink-soft">
           {closing.body}
         </p>
         <p className="mt-10">

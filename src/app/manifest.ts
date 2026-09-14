@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "An intentional retreat community for living differently long enough to discover what genuinely improves your life.",
     start_url: "/",
     display: "standalone",
-    background_color: "#eef1ee",
-    theme_color: "#2c5348",
+    background_color: "#f2f1e8",
+    theme_color: "#354e3a",
     lang: "en",
     icons: [
       {

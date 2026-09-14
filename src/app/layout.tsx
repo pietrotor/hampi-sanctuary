@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Outfit } from "next/font/google";
+import { Cormorant_Garamond, Jost, Newsreader } from "next/font/google";
 import { site } from "@/lib/copy";
 import { siteUrl } from "@/lib/seo";
 import "./globals.css";
@@ -11,8 +11,15 @@ const newsreader = Newsreader({
   display: "swap",
 });
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
   display: "swap",
 });
@@ -79,7 +86,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#eef1ee",
+  themeColor: "#f2f1e8",
   colorScheme: "light",
 };
 
@@ -91,9 +98,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${outfit.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${cormorant.variable} ${jost.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-paper font-sans text-ink">{children}</body>
+      <body className="min-h-full bg-paper font-body text-ink">{children}</body>
     </html>
   );
 }

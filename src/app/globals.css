@@ -1,14 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-display: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", Palatino, serif;
-  --font-sans: var(--font-outfit), "Segoe UI", sans-serif;
-  --color-paper: #eef1ee;
-  --color-mist: #e1e7e2;
-  --color-ink: #1c2621;
-  --color-ink-soft: #44514b;
-  --color-moss: #2c5348;
-  --color-line: #c5d0c8;
+  /* Display echoes the light high-contrast antiqua of the HAMPI wordmark.
+     Body is a text serif because the page is long-form reading.
+     Utility echoes the wide-tracked SANCTUARY caps. */
+  --font-display: var(--font-cormorant), "Iowan Old Style", Palatino, serif;
+  --font-body: var(--font-newsreader), "Iowan Old Style", Palatino, serif;
+  --font-ui: var(--font-jost), "Helvetica Neue", Arial, sans-serif;
+
+  /* Sampled from the supplied logo files:
+     #354e3a (VO), #6a8067 (VC), #e2e0d2 (M). */
+  --color-paper: #f2f1e8;
+  --color-mist: #e2e0d2;
+  --color-ink: #223026;
+  --color-ink-soft: #4a5a4c;
+  --color-accent: #354e3a;
+  --color-sage: #6a8067;
+  --color-deep: #26372a;
+  --color-line: #cfccbd;
 }
 
 html {
@@ -22,16 +31,34 @@ body {
   color: var(--color-ink);
   overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: rgb(44 83 72 / 16%);
+  -webkit-tap-highlight-color: rgb(53 78 58 / 16%);
+}
+
+/* Signature: one grade across every photograph so placeholder and final
+   images read as a single body of work from the documentary.
+   The logo files are flat brand colour and must not be graded. */
+img:not([data-logo]) {
+  filter: saturate(0.9) contrast(1.03);
+}
+
+/* Headings follow the wordmark, so sections only declare scale.
+   Cormorant runs small and light, hence the size and weight bumps. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-cormorant), "Iowan Old Style", Palatino, serif;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
 }
 
 ::selection {
-  background: var(--color-moss);
+  background: var(--color-accent);
   color: var(--color-paper);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-moss);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
@@ -48,8 +75,10 @@ section[id] {
   min-height: 2.85rem;
   max-width: 100%;
   padding: 0.7rem 1.35rem;
-  font-family: var(--font-outfit), "Segoe UI", sans-serif;
-  font-size: 0.95rem;
+  font-family: var(--font-jost), "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   line-height: 1;
   white-space: nowrap;
   transition:
@@ -60,7 +89,7 @@ section[id] {
 }
 
 .btn-primary {
-  background: var(--color-moss);
+  background: var(--color-accent);
   color: var(--color-paper);
 }
 
@@ -69,9 +98,9 @@ section[id] {
 }
 
 .btn-secondary {
-  border: 1px solid var(--color-moss);
+  border: 1px solid var(--color-accent);
   background: transparent;
-  color: var(--color-moss);
+  color: var(--color-accent);
 }
 
 .btn-secondary:hover {
@@ -139,18 +168,19 @@ section[id] {
 /* Scroll-driven reveals. Content stays visible where the timeline is unsupported. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    /* Ranges are lengths, not percentages, so tall and short blocks
-       reveal over the same scroll distance. */
+    /* Ranges are percentages of the entry phase, never fixed lengths: an
+       element shorter than a length-based range can never finish it and
+       would stay dimmed and clipped for good. */
     .reveal {
       animation: reveal-rise linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 300px;
+      animation-range: entry 0% entry 60%;
     }
 
     .reveal-rule {
       animation: reveal-extend linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 260px;
+      animation-range: entry 0% entry 50%;
       transform-origin: left center;
     }
   }
@@ -218,7 +248,7 @@ section[id] {
 }
 
 .everyday-track {
-  scrollbar-color: var(--color-moss) transparent;
+  scrollbar-color: var(--color-accent) transparent;
   scrollbar-width: thin;
   overscroll-behavior-inline: contain;
 }
@@ -232,7 +262,7 @@ section[id] {
 }
 
 .everyday-track::-webkit-scrollbar-thumb {
-  background: var(--color-moss);
+  background: var(--color-accent);
 }
 
 .everyday-photo {
@@ -249,7 +279,7 @@ section[id] {
   .image-reveal > img {
     animation: image-uncover linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 420px;
+    animation-range: entry 0% entry 85%;
   }
 }
 
@@ -283,7 +313,7 @@ details summary::-webkit-details-marker {
 
 details summary::after {
   content: "+";
-  color: var(--color-moss);
+  color: var(--color-accent);
   font-variant-numeric: tabular-nums;
   transition:
     transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -295,7 +325,7 @@ details[open] summary::after {
 }
 
 details summary:hover {
-  color: var(--color-moss);
+  color: var(--color-accent);
 }
 
 @supports selector(details::details-content) {
@@ -321,7 +351,7 @@ details summary:hover {
 
 @media (hover: hover) and (pointer: fine) {
   .faq-row:hover {
-    background-color: color-mix(in srgb, var(--color-moss) 6%, transparent);
+    background-color: color-mix(in srgb, var(--color-accent) 6%, transparent);
   }
 }
 
