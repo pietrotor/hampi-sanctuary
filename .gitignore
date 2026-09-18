@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# client photo originals (web-sized copies live in public/photos)
+/assets/client-photos

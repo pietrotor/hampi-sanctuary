@@ -40,6 +40,9 @@ devDependencies:
   playwright:
     specifier: ^1.63.0
     version: 1.63.0
+  pngjs:
+    specifier: ^7.0.0
+    version: 7.0.0
   tailwindcss:
     specifier: ^4.3.3
     version: 4.3.3
@@ -3104,6 +3107,11 @@ packages:
     hasBin: true
     dependencies:
       playwright-core: 1.63.0
+    dev: true
+
+  /pngjs@7.0.0:
+    resolution: {integrity: sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==}
+    engines: {node: '>=14.19.0'}
     dev: true
 
   /possible-typed-array-names@1.1.0:

@@ -8,7 +8,7 @@ export function FaqSection() {
       className="bg-mist px-5 py-20 sm:px-8 md:px-10 md:py-32"
     >
       <div className="mx-auto max-w-200">
-        <ul className="reveal divide-y divide-line border-y border-line">
+        <ul className="reveal-sequence divide-y divide-line border-y border-line">
           {faq.items.map((item, index) => (
             <li key={item.question} className="faq-row">
               <details className="px-1 py-5 sm:px-3 sm:py-6">

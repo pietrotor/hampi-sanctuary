@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "shots": "node scripts/shoot.mjs",
+    "audit": "node scripts/audit.mjs",
+    "hero-check": "node scripts/hero-rotation.mjs",
+    "slider-check": "node scripts/slider-check.mjs",
+    "menu-check": "node scripts/menu-check.mjs"
   },
   "dependencies": {
     "embla-carousel-react": "^8.6.0",
@@ -22,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
     "playwright": "^1.63.0",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5"
   },

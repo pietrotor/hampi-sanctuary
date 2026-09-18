@@ -5,7 +5,7 @@ import { SitePhoto } from "@/components/SitePhoto";
 export function LifeSection() {
   return (
     <section id={life.id} className="bg-paper px-5 py-20 sm:px-8 md:px-10 md:py-32">
-      <div className="mx-auto grid max-w-350 items-center gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+      <div className="mx-auto grid max-w-350 items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-20">
         <div className="reveal">
           <h2 className="text-balance font-display text-4xl leading-[1.12] text-ink md:text-6xl">
             {life.headline}
@@ -21,11 +21,11 @@ export function LifeSection() {
             ))}
           </div>
         </div>
-        <figure className="image-reveal">
+        <figure className="image-reveal lg:max-w-[30rem]">
           <SitePhoto
             photo={lifePhoto}
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            className="aspect-4/3 w-full object-cover lg:aspect-4/5 xl:aspect-4/3"
+            sizes="(min-width: 1024px) 30rem, 100vw"
+            className="aspect-4/3 w-full object-cover lg:aspect-3/2"
           />
         </figure>
       </div>

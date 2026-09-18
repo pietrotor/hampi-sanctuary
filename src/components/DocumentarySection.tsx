@@ -7,7 +7,7 @@ export function DocumentarySection() {
   return (
     <section
       id={documentary.id}
-      className="bg-deep px-5 py-24 text-paper sm:px-8 md:px-10 md:py-36"
+      className="on-dark bg-deep px-5 py-24 text-paper sm:px-8 md:px-10 md:py-36"
     >
       <div className="mx-auto max-w-275">
         <div className="reveal">
@@ -28,19 +28,53 @@ export function DocumentarySection() {
             ))}
           </div>
         </div>
-        <figure className="image-reveal mt-10 sm:mt-12">
-          <SitePhoto
-            photo={documentaryStill}
-            sizes="(min-width: 1100px) 1100px, 100vw"
-            className="aspect-16/9 w-full object-cover"
-          />
-        </figure>
-        <p className="mt-8">
-          <Link href={placeholders.documentaryHref} className="btn-on-dark">
-            <span aria-hidden="true">▶&nbsp;</span>
+        {/* The still itself is the play target, with the control centred on
+            it, so there is nothing to hunt for below the image. */}
+        {/* Full container width: capped at 48rem it left a dead strip down
+            the right of the section, and a film invitation is the one place
+            the photograph should be at its largest. */}
+        <Link
+          href={placeholders.documentaryHref}
+          className="group mt-10 block sm:mt-12 md:mt-14"
+        >
+          <span className="image-reveal relative block">
+            <SitePhoto
+              photo={documentaryStill}
+              alt=""
+              sizes="(min-width: 1180px) 68.75rem, (min-width: 768px) calc(100vw - 5rem), calc(100vw - 2.5rem)"
+              className="aspect-16/9 w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+            {/* Darkest at the centre, under the control, so the play mark
+                keeps its contrast whatever the still turns out to be. */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 bg-radial-[at_50%_50%] from-ink/75 via-ink/40 via-45% to-ink/25 transition-opacity duration-500 group-hover:opacity-85"
+            />
+            <span className="absolute inset-0 grid place-items-center">
+              <span
+                aria-hidden="true"
+                className="grid size-16 place-items-center rounded-full border border-paper/75 bg-ink/25 text-paper backdrop-blur-sm transition duration-300 group-hover:scale-105 group-hover:border-paper group-hover:bg-paper group-hover:text-ink md:size-20"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="ml-0.5 size-5 md:size-6"
+                >
+                  <path d="M8 5.5v13l11-6.5z" />
+                </svg>
+              </span>
+            </span>
+          </span>
+          {/* The label sits off the photograph: over an unpredictable still
+              it could never guarantee its contrast. */}
+          <span className="mt-5 flex items-center gap-3 font-ui text-xs uppercase tracking-[0.14em] text-paper">
             {documentary.cta}
-          </Link>
-        </p>
+            <span
+              aria-hidden="true"
+              className="h-px w-8 bg-paper/50 transition-[width,background-color] duration-300 group-hover:w-12 group-hover:bg-paper"
+            />
+          </span>
+        </Link>
       </div>
     </section>
   );

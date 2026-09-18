@@ -4,12 +4,14 @@ import { site } from "@/lib/copy";
 type Variant = "green" | "sage" | "bone";
 
 const LOCKUP = { width: 466, height: 500 };
-const MARK = { width: 176, height: 317 };
+const ROW = { width: 705, height: 317 };
 
 /**
- * The supplied lockup is vertical, so the mark alone is used wherever the
- * wordmark would be too small to read (nav). Variant is chosen by the
- * background the logo sits on, never by decoration.
+ * Two arrangements of one logo: the supplied vertical lockup, and a
+ * horizontal row built by `scripts/build-logo-row.mjs` for short surfaces
+ * like the nav. Variant is chosen by the background the logo sits on, never
+ * by decoration. The mark on its own is still used by the icon routes, which
+ * read the PNG directly.
  */
 export function BrandLockup({
   variant,
@@ -33,19 +35,26 @@ export function BrandLockup({
   );
 }
 
-export function BrandMark({
+/**
+ * Mark and wordmark side by side. Carries no "SANCTUARY": at the heights this
+ * arrangement exists for, that line renders about four pixels tall.
+ */
+export function BrandRow({
   variant,
   className,
+  priority = false,
 }: {
   variant: Variant;
   className?: string;
+  priority?: boolean;
 }) {
   return (
     <Image
-      src={`/logo-mark-${variant}.png`}
+      src={`/logo-row-${variant}.png`}
       alt=""
-      width={MARK.width}
-      height={MARK.height}
+      width={ROW.width}
+      height={ROW.height}
+      priority={priority}
       data-logo=""
       className={className}
     />

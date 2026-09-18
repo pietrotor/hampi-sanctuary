@@ -57,8 +57,33 @@ for (const vp of [
     return small;
   });
 
+  // One interaction pattern per page: extra swipe-only regions hide content.
+  const swipeRegions = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll("main *")) {
+      if (el.scrollWidth <= el.clientWidth + 1) continue;
+      const overflowX = getComputedStyle(el).overflowX;
+      if (overflowX !== "auto" && overflowX !== "scroll") continue;
+      out.push(
+        `${el.tagName.toLowerCase()}${
+          el.closest("section[id]") ? `#${el.closest("section[id]").id}` : ""
+        } (${el.scrollWidth}px in ${el.clientWidth}px)`,
+      );
+    }
+    return out;
+  });
+  const tablists = await page.evaluate(
+    () => document.querySelectorAll("main [role=tablist]").length,
+  );
+
   console.log(`\n=== ${vp.name} ===`);
   console.log(`horizontal overflow: ${overflow ? "YES (bug)" : "no"}`);
+  console.log(`tab/slider widgets: ${tablists}`);
+  console.log(
+    `horizontally scrolled regions: ${
+      swipeRegions.length ? swipeRegions.join(", ") : "none"
+    }`,
+  );
   console.log(`stuck-invisible reveal elements: ${hidden.length}`);
   for (const h of hidden)
     console.log(

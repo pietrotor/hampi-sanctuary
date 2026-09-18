@@ -9,19 +9,28 @@ export function PeopleSection() {
         <h2 className="reveal max-w-2xl text-balance font-display text-4xl leading-[1.1] text-ink md:text-5xl">
           {people.headline}
         </h2>
-        <ul className="mt-12 grid gap-14 sm:mt-16 md:grid-cols-2 md:gap-16 lg:gap-20">
+        {/* Portrait beside the bio at author scale, rather than stacked above
+            it at half a screen tall. */}
+        {/* One column: two side-by-side portraits squeezed each bio to a
+            31-character measure. */}
+        <ul className="mt-12 grid gap-12 sm:mt-16 md:gap-14">
           {people.portraits.map((person, index) => (
-            <li key={person.name} className={index % 2 === 1 ? "md:mt-20" : undefined}>
-              <figure className="image-reveal">
+            <li
+              key={person.name}
+              className="grid gap-6 border-t border-line pt-8 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] sm:items-start sm:gap-10"
+            >
+              <figure className="image-reveal max-w-56 sm:max-w-none">
                 <SitePhoto
                   photo={portraits[index]}
-                  sizes="(min-width: 768px) 40vw, 100vw"
+                  sizes="(min-width: 640px) 13rem, 14rem"
                   className="aspect-4/5 w-full object-cover"
                 />
               </figure>
               <div className="reveal">
-                <h3 className="mt-6 font-display text-3xl text-ink">{person.name}</h3>
-                <p className="mt-3 max-w-152 text-pretty font-body text-lg leading-8 text-ink-soft">
+                <h3 className="font-display text-2xl text-ink md:text-3xl">
+                  {person.name}
+                </h3>
+                <p className="mt-3 max-w-[58ch] text-pretty font-body text-base leading-7 text-ink-soft md:text-lg md:leading-8">
                   {person.bio}
                 </p>
               </div>

@@ -14,14 +14,14 @@ export function ThriveSection() {
         {COLUMNS.map(({ title, items, marker }, index) => (
           <div
             key={title}
-            className={`reveal md:row-span-2 md:grid md:grid-rows-subgrid md:gap-0 ${
+            className={`md:row-span-2 md:grid md:grid-rows-subgrid md:gap-0 ${
               index === 1 ? "md:border-l md:border-line md:pl-12 lg:pl-20" : ""
             }`}
           >
-            <h2 className="text-balance font-display text-3xl leading-[1.12] text-ink md:text-4xl">
+            <h2 className="reveal text-balance font-display text-3xl leading-[1.12] text-ink md:text-4xl">
               {thrive[title]}
             </h2>
-            <ul className={`mt-8 list-disc space-y-4 pl-5 ${marker}`}>
+            <ul className={`reveal-sequence mt-8 list-disc space-y-4 pl-5 ${marker}`}>
               {thrive[items].map((item) => (
                 <li
                   key={item}

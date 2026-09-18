@@ -2,31 +2,29 @@
 
 import { useEffect } from "react";
 
-const SELECTOR = ".reveal, .reveal-rule, .image-reveal > img";
+const SELECTOR = ".reveal, .reveal-rule, .image-reveal, .reveal-sequence";
 
 /**
- * Drives the scroll reveals on browsers without scroll-driven animations.
- * Where `animation-timeline: view()` exists, the CSS handles everything and
- * this runs no work at all.
+ * Reveals only off-screen content. The server-rendered default stays visible,
+ * so a failed or delayed script can never make the page unreadable.
  */
 export function RevealMotion() {
   useEffect(() => {
-    if (CSS.supports("animation-timeline: view()")) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(SELECTOR),
     );
 
-    document.documentElement.classList.add("js-reveal");
-
     // Whatever is already on screen stays visible so nothing flashes out.
-    const fold = window.innerHeight * 0.9;
+    const fold = window.innerHeight * 0.92;
     const pending = targets.filter((element) => {
       if (element.getBoundingClientRect().top >= fold) return true;
       element.classList.add("is-revealed");
       return false;
     });
+
+    document.documentElement.classList.add("motion-ready");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,12 +34,15 @@ export function RevealMotion() {
           observer.unobserve(entry.target);
         }
       },
-      { rootMargin: "0px 0px -12% 0px" },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
     );
 
     for (const element of pending) observer.observe(element);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("motion-ready");
+    };
   }, []);
 
   return null;

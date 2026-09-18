@@ -1,4 +1,5 @@
-import { BrandMark } from "@/components/BrandLogo";
+import { BrandRow } from "@/components/BrandLogo";
+import { MobileMenu } from "@/components/MobileMenu";
 import { nav, site } from "@/lib/copy";
 
 export function SkipLink() {
@@ -16,36 +17,47 @@ export function SiteNav() {
   return (
     <nav
       aria-label="Page sections"
-      className="sticky top-0 z-40 border-b border-line bg-paper/92 backdrop-blur-md"
+      className="sticky top-0 z-40 bg-paper/92 backdrop-blur-md"
     >
-      <div className="mx-auto max-w-350 px-5 sm:px-8 md:flex md:h-18 md:items-center md:justify-between md:gap-6 md:px-10">
-        <div className="flex h-16 items-center justify-between gap-4 md:h-auto">
-          {/* Mark only: the supplied lockup is vertical and its wordmark
-              would be illegible at nav height. */}
-          <a href="#top" className="flex min-h-11 items-center">
-            <BrandMark variant="green" className="h-9 w-auto" />
-            <span className="sr-only">{site.name}</span>
-          </a>
-          <a
-            href="#invitation"
-            className="flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-accent md:hidden"
-          >
-            Invitation
-          </a>
-        </div>
-        <ul className="nav-scroll -mx-5 flex gap-7 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8 md:mx-0 md:items-center md:gap-8 md:overflow-visible md:px-0 md:pb-0">
+      <div className="mx-auto flex h-16 max-w-350 items-center justify-between gap-4 px-5 sm:px-8 md:h-18 md:gap-6 md:px-10">
+        <a href="#top" className="flex min-h-11 items-center">
+          <BrandRow variant="green" className="h-10 w-auto" />
+          <span className="sr-only">{site.name}</span>
+        </a>
+        {/* From md there is room to keep the whole index in the bar. Below it,
+            five labels only fit by scrolling sideways, which reads as a
+            clipped bar rather than a list, so they move into the sheet. */}
+        <ul className="hidden md:flex md:items-center md:gap-8">
           {nav.map((item) => (
-            <li key={item.href} className="shrink-0">
+            <li key={item.href}>
               <a
                 href={item.href}
-                className="nav-link flex min-h-8 items-center font-ui text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:text-ink md:min-h-11"
+                className="nav-link flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:text-ink"
               >
                 {item.label}
               </a>
             </li>
           ))}
         </ul>
+        <div className="flex items-center gap-4 md:hidden">
+          <a
+            href="#invitation"
+            className="flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-accent"
+          >
+            Invitation
+          </a>
+          <MobileMenu />
+        </div>
       </div>
+      {/* The bar's bottom rule is itself the progress track, so position is
+          read as one hairline changing colour. Stacked under a separate
+          border, the accent line just looked like a misdrawn edge. */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px bg-line"
+      >
+        <span className="nav-progress block h-full w-full bg-accent" />
+      </span>
     </nav>
   );
 }
