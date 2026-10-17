@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { sitePhotos } from "@/lib/media";
 import { siteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,9 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
-      images: [
-        "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-      ],
+      images: sitePhotos.map((photo) => new URL(photo.src, siteUrl).toString()),
     },
   ];
 }

@@ -1,7 +1,7 @@
 import { BrandLockup } from "@/components/BrandLogo";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { hero } from "@/lib/copy";
-import { heroPhotos } from "@/lib/media";
+import { heroPhotos, mobileHeroPhoto } from "@/lib/media";
 
 const HERO_FRAMES = 5;
 
@@ -11,7 +11,10 @@ export function Hero() {
       id="top"
       className="relative min-h-dvh overflow-hidden bg-ink text-paper"
     >
-      <HeroSlideshow photos={heroPhotos.slice(0, HERO_FRAMES)} />
+      <HeroSlideshow
+        photos={heroPhotos.slice(0, HERO_FRAMES)}
+        mobileFirstPhoto={mobileHeroPhoto}
+      />
       <div className="absolute inset-0 bg-linear-to-t from-ink/80 via-ink/25 to-ink/35" />
       <div className="relative z-10 flex min-h-dvh flex-col justify-between px-5 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))] sm:px-8 md:px-12 md:py-10">
         <div className="hero-brand">

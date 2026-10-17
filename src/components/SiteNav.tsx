@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { BrandRow } from "@/components/BrandLogo";
 import { MobileMenu } from "@/components/MobileMenu";
-import { nav, site } from "@/lib/copy";
+import { closing, nav, placeholders, site } from "@/lib/copy";
 
 export function SkipLink() {
   return (
@@ -27,25 +28,33 @@ export function SiteNav() {
         {/* From md there is room to keep the whole index in the bar. Below it,
             five labels only fit by scrolling sideways, which reads as a
             clipped bar rather than a list, so they move into the sheet. */}
-        <ul className="hidden md:flex md:items-center md:gap-8">
-          {nav.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="nav-link flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:text-ink"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden md:flex md:items-center md:gap-5 lg:gap-8">
+          <ul className="flex items-center gap-5 lg:gap-8">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="nav-link flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={placeholders.conversationHref}
+            className="btn-primary btn-nav hidden! lg:inline-flex!"
+          >
+            {closing.cta}
+          </Link>
+        </div>
         <div className="flex items-center gap-4 md:hidden">
-          <a
-            href="#invitation"
+          <Link
+            href={placeholders.conversationHref}
             className="flex min-h-11 items-center font-ui text-xs uppercase tracking-[0.12em] text-accent"
           >
-            Invitation
-          </a>
+            {closing.cta}
+          </Link>
           <MobileMenu />
         </div>
       </div>

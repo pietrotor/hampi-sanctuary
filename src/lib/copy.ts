@@ -13,6 +13,7 @@ export const nav = [
   { href: "#everyday", label: "Everyday" },
   { href: "#pathways", label: "Pathways" },
   { href: "#people", label: "People" },
+  { href: "#faq", label: "FAQ" },
 ] as const;
 
 export const hero = {
@@ -119,7 +120,21 @@ export const pathways = {
     },
   ],
   learnMore: "Learn more",
-  note: "Psychonautic education and exploration may be available as an optional, interest-based dimension across pathways for suitable participants. Emphasis on preparation, informed decision-making, risk awareness, reflection and integration. Microdosing and ceremony are never automatic inclusions or guaranteed experiences; ceremony requires separate suitability screening and preparation and is a broader process rather than a single event.",
+  showLess: "Show less",
+  note: {
+    label: "Optional, across all pathways",
+    title: "Psychonautic education and exploration",
+    body: "May be available as an optional, interest-based dimension across pathways for suitable participants.",
+    emphasisLabel: "Emphasis on",
+    emphasis: [
+      "Preparation",
+      "Informed decision-making",
+      "Risk awareness",
+      "Reflection and integration",
+    ],
+    caveat:
+      "Microdosing and ceremony are never automatic inclusions or guaranteed experiences. Ceremony requires separate suitability screening and preparation, and is a broader process rather than a single event.",
+  },
 };
 
 export const thrive = {

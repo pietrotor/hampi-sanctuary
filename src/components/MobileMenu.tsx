@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { BrandRow } from "@/components/BrandLogo";
-import { nav } from "@/lib/copy";
+import { closing, nav, placeholders } from "@/lib/copy";
 
 /** Entrance beat for the first row, then one beat per row after it. */
 const STAGGER_FROM = 90;
@@ -116,9 +117,13 @@ export function MobileMenu() {
           </ul>
 
           <div className="nav-sheet-item mt-8 shrink-0" style={stagger(nav.length)}>
-            <a href="#invitation" onClick={close} className="btn-on-dark w-full">
-              Invitation
-            </a>
+            <Link
+              href={placeholders.conversationHref}
+              onClick={close}
+              className="btn-on-dark w-full"
+            >
+              {closing.cta}
+            </Link>
           </div>
         </div>
       </dialog>

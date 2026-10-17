@@ -6,15 +6,24 @@ import { Hero } from "@/components/Hero";
 import { LifeSection } from "@/components/LifeSection";
 import { PathwaysSection } from "@/components/PathwaysSection";
 import { PeopleSection } from "@/components/PeopleSection";
+import { ProgressiveImageWarmup } from "@/components/ProgressiveImageWarmup";
 import { RevealMotion } from "@/components/RevealMotion";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav, SkipLink } from "@/components/SiteNav";
 import { ThriveSection } from "@/components/ThriveSection";
 import { WhySection } from "@/components/WhySection";
-import { faq, site } from "@/lib/copy";
+import { faq, people, site } from "@/lib/copy";
+import { heroPhotos, portraits } from "@/lib/media";
 import { siteUrl } from "@/lib/seo";
 
 export default function Home() {
+  const organizationId = `${siteUrl}#organization`;
+  const danielId = `${siteUrl}#person-daniel`;
+  const andreaId = `${siteUrl}#person-andrea`;
+  const logoUrl = new URL("/logo-lockup-green.png", siteUrl).toString();
+  const heroImageUrl = new URL(heroPhotos[0].src, siteUrl).toString();
+  const [daniel, andrea] = people.portraits;
+
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -25,13 +34,35 @@ export default function Home() {
         name: site.name,
         description: site.shortDescription,
         inLanguage: "en",
+        publisher: { "@id": organizationId },
       },
       {
         "@type": "Organization",
-        "@id": `${siteUrl}#organization`,
+        "@id": organizationId,
         name: site.name,
         url: siteUrl.toString(),
         description: site.description,
+        logo: logoUrl,
+        image: heroImageUrl,
+        founder: { "@id": danielId },
+        member: [{ "@id": danielId }, { "@id": andreaId }],
+      },
+      {
+        "@type": "Person",
+        "@id": danielId,
+        name: daniel.name,
+        description: daniel.bio,
+        image: new URL(portraits[0].src, siteUrl).toString(),
+        jobTitle: "Founder",
+        worksFor: { "@id": organizationId },
+      },
+      {
+        "@type": "Person",
+        "@id": andreaId,
+        name: andrea.name,
+        description: andrea.bio,
+        image: new URL(portraits[1].src, siteUrl).toString(),
+        worksFor: { "@id": organizationId },
       },
       {
         "@type": "FAQPage",
@@ -58,6 +89,7 @@ export default function Home() {
       />
       <SkipLink />
       <RevealMotion />
+      <ProgressiveImageWarmup />
       <main>
         <Hero />
         <SiteNav />
@@ -67,8 +99,8 @@ export default function Home() {
         <EverydaySection />
         <PathwaysSection />
         <ThriveSection />
-        <FaqSection />
         <PeopleSection />
+        <FaqSection />
         <ClosingSection />
       </main>
       <SiteFooter />

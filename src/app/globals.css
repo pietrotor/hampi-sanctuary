@@ -34,13 +34,6 @@ body {
   -webkit-tap-highlight-color: rgb(53 78 58 / 16%);
 }
 
-/* Signature: one grade across every photograph so placeholder and final
-   images read as a single body of work from the documentary.
-   The logo files are flat brand colour and must not be graded. */
-img:not([data-logo]) {
-  filter: saturate(0.9) contrast(1.03);
-}
-
 /* Headings follow the wordmark, so sections only declare scale.
    Cormorant runs small and light, hence the size and weight bumps. */
 h1,
@@ -129,6 +122,13 @@ section[id] {
   color: var(--color-ink);
 }
 
+.btn-nav {
+  min-height: 2.5rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
 .btn-primary:active,
 .btn-secondary:active,
 .btn-on-dark:active {
@@ -181,7 +181,7 @@ section[id] {
   }
   to {
     clip-path: inset(0);
-    filter: saturate(0.9) contrast(1.03);
+    filter: none;
   }
 }
 
@@ -261,7 +261,7 @@ section[id] {
   clip-path: inset(0);
   opacity: 1;
   transform: none;
-  filter: saturate(0.9) contrast(1.03);
+  filter: none;
 }
 
 .motion-ready .reveal-rule.is-revealed {
@@ -362,6 +362,59 @@ details summary:hover {
   details[open]::details-content {
     block-size: auto;
     opacity: 1;
+  }
+}
+
+details summary.pathway-more {
+  display: inline-flex;
+  justify-content: flex-start;
+  gap: 0.875rem;
+}
+
+details summary.pathway-more::after {
+  content: none;
+}
+
+.pathway-more-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.pathway-more-icon::before {
+  content: "+";
+  line-height: 1;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+details[open] .pathway-more-icon::before {
+  transform: rotate(45deg);
+}
+
+.pathway-more-label {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  details summary.pathway-more:hover .pathway-more-icon {
+    background-color: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  details summary.pathway-more:hover .pathway-more-label {
+    text-decoration-color: currentColor;
   }
 }
 

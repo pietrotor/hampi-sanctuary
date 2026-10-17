@@ -7,72 +7,77 @@ export type Photo = {
 };
 
 /**
- * The client's own photography of the site, resized for the web from the
- * originals in `assets/client-photos/`. Only the portraits are still stock
- * placeholders, because no photographs of Daniel and Andrea were supplied.
+ * The client's own photography, resized for the web from the originals in
+ * `assets/client-photos/`. Daniel's portrait comes from the WEB-DANI set.
  */
-const u = (id: string, extra = "") =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70${extra}`;
 
 export const heroPhotos: Photo[] = [
   {
-    src: "/photos/pond-gathering.jpg",
+    src: "/photos/pond-gathering.webp",
     alt: "Friends gathering on a wooden platform in Hampi Sanctuary's natural pond",
-    width: 2400,
-    height: 1348,
+    width: 3648,
+    height: 2048,
     position: "center 48%",
   },
   {
-    src: "/photos/garden-cacti-sky.jpg",
+    src: "/photos/garden-cacti-sky.webp",
     alt: "Cacti and flowers along the lawn under an open sky",
-    width: 2400,
-    height: 1600,
-    position: "center 55%",
+    width: 3840,
+    height: 2560,
+    position: "center 58%",
   },
   {
-    src: "/photos/garden-run.jpg",
+    src: "/photos/garden-run.webp",
     alt: "Andrea running with the dogs through the sunlit gardens",
-    width: 2400,
-    height: 1600,
+    width: 3648,
+    height: 2432,
     position: "center 38%",
   },
   {
-    src: "/photos/lavender-oven.jpg",
+    src: "/photos/lavender-oven.webp",
     alt: "Lavender, cacti and an adobe outdoor oven in the sanctuary garden",
-    width: 2400,
-    height: 1338,
+    width: 3840,
+    height: 2142,
     position: "center 48%",
   },
   {
-    src: "/photos/pond-platform.jpg",
+    src: "/photos/pond-platform.webp",
     alt: "A wooden platform extending over a quiet natural pond",
-    width: 2400,
-    height: 1348,
+    width: 3840,
+    height: 2157,
     position: "center 52%",
   },
 ];
 
+export const mobileHeroPhoto: Photo = {
+  src: "/photos/pond-gathering-mobile.webp",
+  alt: heroPhotos[0].alt,
+  width: 960,
+  height: 2048,
+  position: "center 48%",
+};
+
 export const lifePhoto: Photo = {
-  src: "/photos/garden-doorway.jpg",
-  alt: "A guest stepping into the garden through flowering angel's trumpets",
-  width: 1800,
-  height: 1002,
-  position: "center 45%",
+  src: "/photos/pond-lilies.webp",
+  alt: "A quiet swim among the water lilies in the natural pond",
+  width: 2000,
+  height: 1333,
+  position: "center 58%",
 };
 
 export const whyPhoto: Photo = {
-  src: "/photos/garden-mountains.jpg",
+  src: "/photos/garden-mountains.webp",
   alt: "Hampi Sanctuary's garden and cacti beneath the surrounding mountains",
-  width: 1800,
-  height: 1200,
+  width: 2000,
+  height: 1333,
   position: "center 62%",
 };
 
 export const documentaryStill: Photo = {
-  src: "/photos/community-conversation.jpg",
+  src: "/photos/community-conversation.webp",
   alt: "A community conversation in the garden framed by lavender",
   width: 2400,
-  height: 1348,
+  height: 1347,
   position: "center 48%",
 };
 
@@ -81,51 +86,64 @@ export const documentaryStill: Photo = {
  * facets compete with each other and none of them said anything.
  */
 export const everydayPhoto: Photo = {
-  src: "/photos/pond-afternoon.jpg",
+  src: "/photos/pond-afternoon.webp",
   alt: "People sharing a sunny afternoon around the natural pond",
-  width: 2400,
-  height: 1348,
+  width: 3200,
+  height: 1796,
   position: "center 52%",
 };
 
 export const pathwayPhotos: Photo[] = [
   {
-    src: "/photos/garden-harvest.jpg",
-    alt: "Fresh squash and tomatoes harvested from the garden",
-    width: 990,
+    src: "/photos/garden-bowl.webp",
+    alt: "A garden meal served on a tree stump among the lavender",
+    width: 1600,
+    height: 1200,
+    position: "center 46%",
+  },
+  {
+    src: "/photos/garden-work.webp",
+    alt: "Working from a chair in the garden at Hampi Sanctuary",
+    width: 1760,
     height: 1320,
-    position: "center 58%",
+    position: "center 42%",
   },
   {
-    src: "/photos/candlelit-practice.jpg",
-    alt: "A restful indoor practice space lit by candles",
-    width: 1400,
-    height: 934,
-    position: "center 52%",
-  },
-  {
-    src: "/photos/quiet-meditation.jpg",
+    src: "/photos/quiet-meditation.webp",
     alt: "A guest meditating quietly among indoor plants",
-    width: 1400,
-    height: 934,
+    width: 1600,
+    height: 1067,
     position: "center 42%",
   },
 ];
 
 export const portraits: Photo[] = [
   {
-    src: u("photo-1506794778202-cad84cf45f1d", "&w=1000"),
-    alt: "Portrait placeholder for Daniel",
-    width: 1000,
-    height: 1250,
-    position: "center 28%",
+    src: "/photos/daniel-portrait.webp",
+    alt: "Daniel resting in the garden with a dog",
+    width: 990,
+    height: 1238,
+    position: "center 42%",
   },
   {
-    /* Cropped from the wider garden photograph, the only supplied frame of
-       either founder. Daniel stays a placeholder until a portrait arrives. */
-    src: "/photos/andrea-portrait.jpg",
+    src: "/photos/andrea-portrait.webp",
     alt: "Andrea in the gardens at Hampi Sanctuary",
     width: 800,
     height: 1000,
   },
 ];
+
+/** Every site photograph, once each — for the image sitemap. */
+export const sitePhotos: Photo[] = [
+  ...heroPhotos,
+  mobileHeroPhoto,
+  lifePhoto,
+  whyPhoto,
+  documentaryStill,
+  everydayPhoto,
+  ...pathwayPhotos,
+  ...portraits,
+].filter(
+  (photo, index, list) =>
+    list.findIndex((entry) => entry.src === photo.src) === index,
+);

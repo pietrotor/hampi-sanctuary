@@ -14,6 +14,12 @@ const lockup = readFileSync(
   join(process.cwd(), "public", "logo-lockup-bone.png"),
 ).toString("base64");
 
+// Satori cannot decode WebP, so this is a JPEG cut of pond-gathering at the
+// card's own size.
+const background = readFileSync(
+  join(process.cwd(), "public", "og-background.jpg"),
+).toString("base64");
+
 /**
  * Satori has no access to next/font, so the display face is fetched at build
  * time. A failure here must not break the build, hence the silent fallback.
@@ -39,32 +45,58 @@ export default async function OpenGraphImage() {
   return new ImageResponse(
     <div
       style={{
-        alignItems: "center",
-        background: "#26372a",
-        color: "#e2e0d2",
         display: "flex",
-        gap: 76,
         height: "100%",
-        padding: "72px 84px",
+        position: "relative",
         width: "100%",
       }}
     >
       <img
-        src={`data:image/png;base64,${lockup}`}
+        src={`data:image/jpeg;base64,${background}`}
         alt=""
-        width={205}
-        height={220}
+        width={1200}
+        height={630}
+        style={{ position: "absolute" }}
       />
       <div
         style={{
+          background:
+            "linear-gradient(90deg, rgba(38,55,42,0.94) 0%, rgba(38,55,42,0.86) 55%, rgba(38,55,42,0.4) 100%)",
           display: "flex",
-          fontFamily: font ? "Cormorant Garamond" : "serif",
-          fontSize: 76,
-          lineHeight: 1.1,
-          maxWidth: 660,
+          height: "100%",
+          position: "absolute",
+          width: "100%",
+        }}
+      />
+      <div
+        style={{
+          alignItems: "center",
+          color: "#e2e0d2",
+          display: "flex",
+          gap: 64,
+          height: "100%",
+          padding: "72px 84px",
+          position: "relative",
+          width: "100%",
         }}
       >
-        {hero.headline}
+        <img
+          src={`data:image/png;base64,${lockup}`}
+          alt=""
+          width={180}
+          height={193}
+        />
+        <div
+          style={{
+            display: "flex",
+            fontFamily: font ? "Cormorant Garamond" : "serif",
+            fontSize: 72,
+            lineHeight: 1.08,
+            maxWidth: 660,
+          }}
+        >
+          {hero.headline}
+        </div>
       </div>
     </div>,
     {
