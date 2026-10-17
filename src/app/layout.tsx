@@ -53,20 +53,11 @@ export const metadata: Metadata = {
     title: site.title,
     description: site.shortDescription,
     locale: "en_US",
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: `${site.name}, an intentional retreat community`,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.shortDescription,
-    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
