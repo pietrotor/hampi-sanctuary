@@ -34,14 +34,11 @@ export function EverydayMobileCarousel({
   onClose,
 }: Props) {
   const swiperRef = useRef<SwiperInstance | null>(null);
-  const heightObserver = useRef<ResizeObserver | null>(null);
   const indexRef = useRef(index);
 
   useEffect(() => {
     indexRef.current = index;
   }, [index]);
-
-  useEffect(() => () => heightObserver.current?.disconnect(), []);
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -50,53 +47,43 @@ export function EverydayMobileCarousel({
   }, [index]);
 
   return (
-    <div className="sm:hidden">
+    <div className="flex h-full min-h-0 flex-1 flex-col sm:hidden">
       <Swiper
         modules={[A11y]}
-        autoHeight
         rewind
         speed={460}
         spaceBetween={16}
         initialSlide={index}
         watchOverflow
+        className="h-full min-h-0 w-full flex-1 overflow-clip!"
+        style={{ height: "100%", overflow: "clip" }}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
-          heightObserver.current?.disconnect();
-          const fit = () => {
-            if (!swiper.destroyed) swiper.updateAutoHeight(0);
-          };
-          fit();
-          const observer = new ResizeObserver(fit);
-          swiper.slides.forEach((slide) => observer.observe(slide));
-          heightObserver.current = observer;
+          swiper.el.scrollTop = 0;
         }}
         onSlideChange={(swiper) => {
+          swiper.el.scrollTop = 0;
           if (swiper.realIndex !== indexRef.current) onIndex(swiper.realIndex);
         }}
       >
         {categories.map((category, slide) => {
           const photo = photos[slide];
-          const portrait = photo.height > photo.width;
           return (
-            <SwiperSlide key={category.title} style={{ height: "auto" }}>
-              <article className="overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]">
-                <SitePhoto
-                  photo={photo}
-                  sizes="100vw"
-                  className={
-                    portrait
-                      ? "h-[clamp(8rem,26dvh,14rem)] w-full object-cover object-center"
-                      : "h-auto max-h-[38dvh] w-full object-cover object-center"
-                  }
-                />
-                <div className="relative min-h-0 overflow-y-auto px-6 pt-6 pb-7">
+            <SwiperSlide key={category.title} inert={slide !== index}>
+              <article className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]">
+                <div className="relative min-h-24 flex-1 overflow-hidden">
+                  <SitePhoto
+                    photo={photo}
+                    sizes="100vw"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
                   <button
                     type="button"
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-10 grid size-11 cursor-pointer place-items-center rounded-lg border border-paper/70 bg-ink text-paper shadow-[0_0.5rem_1.5rem_rgb(34_48_38/0.2)]"
+                    className="absolute top-3 right-3 z-10 grid size-9 cursor-pointer place-items-center rounded-md border border-paper/70 bg-ink text-paper shadow-[0_0.4rem_1.2rem_rgb(34_48_38/0.25)]"
                   >
                     <span className="sr-only">Close {category.title}</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4">
                       <path
                         d="M5 5l14 14M19 5 5 19"
                         fill="none"
@@ -105,11 +92,13 @@ export function EverydayMobileCarousel({
                       />
                     </svg>
                   </button>
+                </div>
+                <div className="min-h-0 shrink overflow-y-auto px-6 pt-5 pb-6">
                   <h3
                     id={
                       labelled && slide === index ? "everyday-dialog-title" : undefined
                     }
-                    className="pr-14 font-display text-4xl leading-[1.05] text-ink"
+                    className="font-display text-4xl leading-[1.05] text-ink"
                   >
                     {category.title}
                   </h3>
@@ -122,7 +111,7 @@ export function EverydayMobileCarousel({
           );
         })}
       </Swiper>
-      <div className="mt-3 flex items-center justify-center gap-3">
+      <div className="mt-3 flex shrink-0 items-center justify-center gap-3">
         <button
           type="button"
           className={arrowClass}
