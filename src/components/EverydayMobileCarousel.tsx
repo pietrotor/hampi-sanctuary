@@ -34,11 +34,14 @@ export function EverydayMobileCarousel({
   onClose,
 }: Props) {
   const swiperRef = useRef<SwiperInstance | null>(null);
+  const heightObserver = useRef<ResizeObserver | null>(null);
   const indexRef = useRef(index);
 
   useEffect(() => {
     indexRef.current = index;
   }, [index]);
+
+  useEffect(() => () => heightObserver.current?.disconnect(), []);
 
   useEffect(() => {
     const swiper = swiperRef.current;
@@ -47,19 +50,30 @@ export function EverydayMobileCarousel({
   }, [index]);
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col sm:hidden">
+    <div className="sm:hidden">
       <Swiper
         modules={[A11y]}
+        autoHeight
         rewind
         speed={460}
         spaceBetween={16}
         initialSlide={index}
         watchOverflow
-        className="h-full min-h-0 w-full flex-1 overflow-clip!"
-        style={{ height: "100%", overflow: "clip" }}
+        className="overflow-clip!"
+        style={{ overflow: "clip" }}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
           swiper.el.scrollTop = 0;
+          heightObserver.current?.disconnect();
+          const fit = () => {
+            if (swiper.destroyed) return;
+            swiper.el.scrollTop = 0;
+            swiper.updateAutoHeight(0);
+          };
+          fit();
+          const observer = new ResizeObserver(fit);
+          swiper.slides.forEach((slide) => observer.observe(slide));
+          heightObserver.current = observer;
         }}
         onSlideChange={(swiper) => {
           swiper.el.scrollTop = 0;
@@ -68,14 +82,23 @@ export function EverydayMobileCarousel({
       >
         {categories.map((category, slide) => {
           const photo = photos[slide];
+          const portrait = photo.height > photo.width;
           return (
-            <SwiperSlide key={category.title} inert={slide !== index}>
-              <article className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]">
-                <div className="relative min-h-24 flex-1 overflow-hidden">
+            <SwiperSlide
+              key={category.title}
+              style={{ height: "auto" }}
+              inert={slide !== index}
+            >
+              <article className="overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]">
+                <div className="relative">
                   <SitePhoto
                     photo={photo}
                     sizes="100vw"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className={
+                      portrait
+                        ? "h-[clamp(8rem,26dvh,14rem)] w-full object-cover object-center"
+                        : "h-auto max-h-[38dvh] w-full object-cover object-center"
+                    }
                   />
                   <button
                     type="button"
@@ -93,7 +116,7 @@ export function EverydayMobileCarousel({
                     </svg>
                   </button>
                 </div>
-                <div className="min-h-0 shrink overflow-y-auto px-6 pt-5 pb-6">
+                <div className="px-6 pt-6 pb-7">
                   <h3
                     id={
                       labelled && slide === index ? "everyday-dialog-title" : undefined
@@ -111,7 +134,7 @@ export function EverydayMobileCarousel({
           );
         })}
       </Swiper>
-      <div className="mt-3 flex shrink-0 items-center justify-center gap-3">
+      <div className="mt-3 flex items-center justify-center gap-3">
         <button
           type="button"
           className={arrowClass}

@@ -191,7 +191,7 @@ export function EverydayCards({ categories, photos }: Props) {
           <>
             <div className="everyday-dialog-scroll pointer-events-none absolute inset-0 flex flex-col overflow-y-auto px-4 py-4 sm:items-center sm:justify-center sm:px-8 sm:pt-4 sm:pb-30">
               <div
-                className={`everyday-dialog-panel pointer-events-auto relative flex min-h-0 w-full flex-1 flex-col overflow-visible bg-transparent sm:my-auto sm:block sm:h-auto sm:max-h-full sm:min-h-0 sm:flex-none sm:overflow-x-hidden sm:overflow-y-auto sm:rounded-2xl sm:bg-paper ${
+                className={`everyday-dialog-panel pointer-events-auto relative w-full overflow-visible bg-transparent sm:my-auto sm:max-h-full sm:min-h-0 sm:overflow-x-hidden sm:overflow-y-auto sm:rounded-2xl sm:bg-paper ${
                   isPortrait ? "max-w-4xl" : "max-w-6xl"
                 }`}
               >
