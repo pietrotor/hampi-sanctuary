@@ -10,10 +10,9 @@ import { ProgressiveImageWarmup } from "@/components/ProgressiveImageWarmup";
 import { RevealMotion } from "@/components/RevealMotion";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav, SkipLink } from "@/components/SiteNav";
-import { ThriveSection } from "@/components/ThriveSection";
 import { WhySection } from "@/components/WhySection";
 import { faq, people, site } from "@/lib/copy";
-import { heroPhotos, portraits } from "@/lib/media";
+import { heroSharePhoto, portraits } from "@/lib/media";
 import { siteUrl } from "@/lib/seo";
 
 export default function Home() {
@@ -21,7 +20,7 @@ export default function Home() {
   const danielId = `${siteUrl}#person-daniel`;
   const andreaId = `${siteUrl}#person-andrea`;
   const logoUrl = new URL("/logo-lockup-green.png", siteUrl).toString();
-  const heroImageUrl = new URL(heroPhotos[0].src, siteUrl).toString();
+  const heroImageUrl = new URL(heroSharePhoto.src, siteUrl).toString();
   const [daniel, andrea] = people.portraits;
 
   const structuredData = {
@@ -98,9 +97,8 @@ export default function Home() {
         <DocumentarySection />
         <EverydaySection />
         <PathwaysSection />
-        <ThriveSection />
-        <PeopleSection />
         <FaqSection />
+        <PeopleSection />
         <ClosingSection />
       </main>
       <SiteFooter />

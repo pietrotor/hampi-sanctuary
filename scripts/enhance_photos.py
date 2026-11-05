@@ -40,6 +40,10 @@ class Job:
 # crisp on reeds turn skin and hair crunchy.
 PORTRAIT = {"clarity": 0.08, "sharpen": 26, "vibrance": 0.07, "denoise": 1.3}
 
+# The 2x restore specks in chroma. Same softer grade the screenshot heroes use.
+AI = {"denoise": 0.9, "clarity": 0.1, "sharpen": 24}
+AI_PORTRAIT = {**PORTRAIT, "denoise": 0.9}
+
 # Widths follow the largest rendered size at 2x (3x for mobile portrait
 # hero), capped at what the original can honestly supply.
 JOBS = [
@@ -55,6 +59,46 @@ JOBS = [
     Job("garden-run", "_MG_5175.JPG", 3648, tone={"denoise": 0.6}),
     Job("lavender-oven", "2hampi.jpg.png", 3840, ai=True, tone={"denoise": 0.9, "clarity": 0.1, "sharpen": 24}),
     Job("pond-platform", "Screen by me.png", 3840, ai=True, tone={"denoise": 0.9, "clarity": 0.1, "sharpen": 24}),
+    # Hero 2026. Width is a ceiling. Camera files stay at their real size.
+    # Exports under ~2800px are restored 2x first so a retina hero is not
+    # stretching them. The mobile crop is the useful centre of the opener
+    # at tall-phone proportions, taken before the restore.
+    Job("garden-dogs-run", "hero-2026/garden-dogs-run.png", 3840, ai=True, tone=AI_PORTRAIT),
+    Job(
+        "garden-dogs-run-mobile",
+        "hero-2026/garden-dogs-run.png",
+        960,
+        crop=(528, 0, 480, 1024),
+        ai=True,
+        tone=AI_PORTRAIT,
+    ),
+    Job("sanctuary-facade", "hero-2026/sanctuary-facade.png", 3840, ai=True, tone=AI),
+    Job("angels-trumpet-entrance", "hero-2026/angels-trumpet-entrance.png", 3840, ai=True, tone=AI_PORTRAIT),
+    Job("palo-santo-ceremony", "hero-2026/palo-santo-ceremony.png", 3840, ai=True, tone=AI_PORTRAIT),
+    Job("lavender-cactus-oven", "hero-2026/lavender-cactus-oven.png", 3840, ai=True, tone=AI),
+    Job("san-pedro-bloom", "web-dani/San Pedro.png", 3840, ai=True, tone=AI),
+    Job("pond-lilies-yellow", "hero-2026/pond-lilies-yellow.png", 3840, ai=True, tone=AI),
+    Job("lavender-circle-share", "_MG_9500.JPG", 3840),
+    Job("integration-candlelight", "hero-2026/integration-candlelight.png", 3840, ai=True, tone=AI_PORTRAIT),
+    Job("altar-buddha-offering", "web-dani/_MG_3522.JPG", 3840),
+    Job(
+        "bonfire-circle-night",
+        "hero-2026/bonfire-circle-night.png",
+        3840,
+        ai=True,
+        tone={"denoise": 0.9, "clarity": 0.08, "sharpen": 22, "levels": 0.2},
+    ),
+    # 2808px wide is enough on a laptop, but a 3x phone covers this
+    # frame by its short side and stretches it. Restore, then cap at 3840.
+    Job(
+        "waterfall-connection",
+        "hero-2026/waterfall-connection.png",
+        3840,
+        ai=True,
+        tone=AI_PORTRAIT,
+    ),
+    Job("quiet-inward", "hero-2026/quiet-inward.png", 3840, ai=True, tone=AI_PORTRAIT),
+    Job("pond-reeds", "hero-2026/pond-reeds.jpeg", 3840, ai=True, tone=AI),
     # Sections.
     # Already 3:2. Shifting it right used to run past the frame and pad black.
     Job("pond-lilies", "web-dani/_MG_9107.JPG", 2000, tone={"clarity": 0.1, "sharpen": 34, "vibrance": 0.07, "denoise": 0.45}),

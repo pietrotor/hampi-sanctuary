@@ -12,14 +12,30 @@ export const nav = [
   { href: "#why", label: "Why" },
   { href: "#everyday", label: "Everyday" },
   { href: "#pathways", label: "Pathways" },
-  { href: "#people", label: "People" },
   { href: "#faq", label: "FAQ" },
+  { href: "#people", label: "People" },
 ] as const;
 
-export const hero = {
-  headline: "A place for meaningful transformation.",
-  body: "Live alongside a small community while exploring healthy routines, practices, nourishing food, movement, meditation, and meaningful conversations. Discover what's worth bringing home.",
-};
+export const heroOptions = [
+  {
+    id: "option-1",
+    label: "Option 1",
+    headline: "A place for meaningful transformation.",
+    body: "Live alongside a small community while exploring nourishing food, movement, meditation, healthy routines and meaningful conversations.",
+  },
+  {
+    id: "option-5",
+    label: "Option 5",
+    headline: "Live differently. See what changes.",
+    body: "Explore a more intentional rhythm of life through nature, nourishing food, movement, meditation and meaningful conversations alongside a small community.",
+  },
+  {
+    id: "option-6",
+    label: "Option 6",
+    headline: "You know what matters. Make space to live it.",
+    body: "Nature, movement, nourishing food and meaningful connection are easy to postpone. Hampi Sanctuary creates space to put them at the centre of daily life.",
+  },
+] as const;
 
 export const life = {
   id: "life",
@@ -46,10 +62,9 @@ export const why = {
 export const documentary = {
   id: "documentary",
   kicker: "A closer look",
-  headline: "Experience Hampi before you arrive.",
+  headline: "The Hampi experience in 20 minutes",
   paragraphs: [
     "Our 20-minute documentary offers an honest look at everyday life, the philosophy behind Hampi, and the people who are bringing it to life.",
-    "Whether you're considering a visit or simply curious about what makes this place different, we invite you to spend a little time with us.",
   ],
   cta: "Watch our short documentary",
 };
@@ -87,74 +102,41 @@ export const everyday = {
 
 export const pathways = {
   id: "pathways",
-  headline: "How You Can Experience Hampi Sanctuary",
-  intro:
-    "There isn't one reason people come to Hampi Sanctuary. The three pathways represent different relationships with the environment, community, time and support — not Good / Better / Best versions of the same product.",
+  headline: "3 Paths To Experience Hampi Sanctuary",
   items: [
     {
-      name: "CONTRIBUTE",
-      title: "Community Contribution",
+      title: "Volunteering",
       line: "Help create the environment.",
-      summary:
+      paragraphs: [
         "For people who genuinely want to help create and maintain Hampi Sanctuary, have enough time to contribute reliably, and want to become part of the community rather than simply stay as guests.",
-      expanded:
-        "Community Contribution is for people who want to take an active role in helping create and maintain Hampi Sanctuary while becoming part of the community. Participants contribute approximately 20 hours per week through useful work matched to Hampi Sanctuary's real needs and their abilities. Reliability, initiative, independence and a good community attitude matter more than impressive credentials, although specialist skills can be especially valuable when they meet a current need. Contributors stay in shared accommodation, share simple nutritious vegetarian communal meals, use the shared facilities, and participate in suitable scheduled practices and ordinary community life. It is a genuine exchange of value and belonging — not simply a discounted version of another pathway.",
+        "Volunteering is for people who want to take an active role in helping create and maintain Hampi Sanctuary while becoming part of the community. Participants contribute approximately 20 hours per week through useful work matched to Hampi Sanctuary's real needs and their abilities. Reliability, initiative, independence and a good community attitude matter more than impressive credentials, although specialist skills can be especially valuable when they meet a current need. Contributors stay in shared accommodation, share simple nutritious vegetarian communal meals, use the shared facilities, and participate in suitable scheduled practices and ordinary community life. It is a genuine exchange of value and belonging — not simply a discounted version of another pathway.",
+      ],
     },
     {
-      name: "LIVE",
       title: "Community Living",
       line: "Live inside the environment.",
-      summary:
+      paragraphs: [
         "For independent, curious people who want to step outside their normal environment for an extended period without putting their own life on hold — particularly remote workers and digital nomads, people taking a sabbatical, writing or creating, resting, reconsidering what comes next, or developing healthier routines.",
-      expanded:
         "You don't need to put your life on hold to experience Hampi Sanctuary. Bring your life with you — and experiment with living it differently. Community Living is particularly suited to remote workers and digital nomads, people on sabbatical, writers and creators, people between chapters of life, and others who have enough independence to direct their own time but want a more supportive environment around them. It combines community, nourishing food, practices, facilitated group explorations, regular personal check-ins, nature, and space for work, rest or personal projects. The value is not simply freedom from a work obligation; it is the opportunity to live your actual life inside a deliberately different environment long enough to discover what changes.",
+      ],
     },
     {
-      name: "TRANSFORM",
       title: "Guided Transformation",
       line: "Use the environment deliberately.",
-      summary:
-        "Sometimes life gives us a reason to pause.\n\nFor people who have something meaningful they want to understand, address or change — and who want to make that process a central priority of their stay with substantially more individual attention, structure and guidance from Hampi Sanctuary.",
-      expanded:
-        "Sometimes life gives us a reason to pause. Guided Transformation is for someone facing a meaningful goal, problem, transition or desired change who does not simply want access to a good environment, but wants help navigating what to do with it. Hampi Sanctuary works with the participant to clarify what matters, understand relevant routines, patterns and previous attempts, develop and explain an individualized approach, observe what happens, and review and adapt the process over time. This can include greater personal guidance, accountability and coordination with appropriate specialists where useful. It is not Community Living with more activities; its value is the depth of attention, personalization, coordination and adaptation. The participant remains responsible for their choices and development throughout.",
+      paragraphs: [
+        "Sometimes life gives us a reason to pause.",
+        "For people who have something meaningful they want to understand, address or change — and who want to make that process a central priority of their stay with substantially more individual attention, structure and guidance from Hampi Sanctuary.",
+        "Guided Transformation is for someone facing a meaningful goal, problem, transition or desired change who does not simply want access to a good environment, but wants help navigating what to do with it. Hampi Sanctuary works with the participant to clarify what matters, understand relevant routines, patterns and previous attempts, develop and explain an individualized approach, observe what happens, and review and adapt the process over time. This can include greater personal guidance, accountability and coordination with appropriate specialists where useful. It is not Community Living with more activities; its value is the depth of attention, personalization, coordination and adaptation. The participant remains responsible for their choices and development throughout.",
+      ],
     },
   ],
-  learnMore: "Learn more",
-  showLess: "Show less",
-  note: {
-    label: "Optional, across all pathways",
-    title: "Psychonautic education and exploration",
-    body: "May be available as an optional, interest-based dimension across pathways for suitable participants.",
-    emphasisLabel: "Emphasis on",
-    emphasis: [
-      "Preparation",
-      "Informed decision-making",
-      "Risk awareness",
-      "Reflection and integration",
-    ],
-    caveat:
-      "Microdosing and ceremony are never automatic inclusions or guaranteed experiences. Ceremony requires separate suitability screening and preparation, and is a broader process rather than a single event.",
+  plantMedicine: {
+    title: "Plant Medicines",
+    quote:
+      "For the right person, plant medicine is the most powerful catalyst for change I've seen.",
+    attribution: "Daniel Albinsson",
+    body: "Microdosing and ceremony are never automatic inclusions or guaranteed experiences. Ceremony requires separate suitability screening and preparation and should be understood as a broader process rather than a single event.",
   },
-};
-
-export const thrive = {
-  id: "fit",
-  yesTitle: "You might feel at home here if…",
-  yes: [
-    "You're ready to invest time and energy in your own well-being and development.",
-    "You're curious, open-minded and willing to explore new practices and perspectives.",
-    "You value nature, meaningful conversations and a slower, more intentional rhythm of life.",
-    "You want more than a memorable experience — you want to discover what is worth carrying into everyday life.",
-    "You take responsibility for your own choices and participation.",
-  ],
-  noTitle: "Hampi Sanctuary might not be the right fit if…",
-  no: [
-    "You're mainly looking for a luxury resort or all-inclusive holiday.",
-    "You expect someone else to solve your problems for you.",
-    "You're unwilling to try new experiences or question familiar patterns.",
-    "You're looking for constant entertainment rather than space to slow down.",
-    "You're not interested in living respectfully alongside others in a shared environment.",
-  ],
 };
 
 export const faq = {
@@ -168,12 +150,12 @@ export const faq = {
     {
       question: "Can I work remotely while staying at Hampi Sanctuary?",
       answer:
-        "Yes. Community Living is specifically compatible with remote work and personal projects. Community Contribution can work for some remote workers only when they genuinely have enough time for their contribution responsibilities. Guided Transformation is designed for people prioritizing a more focused personal process.",
+        "Yes. Community Living is specifically compatible with remote work and personal projects. Volunteering can work for some remote workers only when they genuinely have enough time for their contribution responsibilities. Guided Transformation is designed for people prioritizing a more focused personal process.",
     },
     {
       question: "Do I have to participate in every activity?",
       answer:
-        "No. Most practices are invitations rather than obligations. Community Contribution responsibilities are real commitments, and safety-related requirements may also be mandatory.",
+        "No. Most practices are invitations rather than obligations. Volunteering responsibilities are real commitments, and safety-related requirements may also be mandatory.",
     },
     {
       question: "Are plant-medicine ceremonies required?",
@@ -209,19 +191,19 @@ export const people = {
   portraits: [
     {
       name: "Daniel",
-      bio: "Daniel built Hampi Sanctuary from the ground up after years of exploring questions around meaning, personal transformation, consciousness, community and how people create lasting change. His role centers on strategy, guidance, quality and protecting the philosophy behind the work.",
+      bio: "Daniel's work has long centered on a practical question: what helps people live well? Before founding Hampi Sanctuary, he helped build a company making scientific research on well-being accessible. For more than a decade, he has pursued that same question across continents — learning from traditional practitioners and exploring what different approaches to meaning, consciousness and personal change have in common. He built Hampi Sanctuary to put that learning into practice. Today, he helps guests examine how their habits and priorities shape their lives, and identify changes that reflect what truly matters to them.",
     },
     {
       name: "Andrea",
-      bio: "Andrea brings warmth, creativity and hospitality to Hampi Sanctuary and helps shape the human feeling of the place and how its story is communicated.",
+      bio: "Andrea brings a deep interest in medicinal plants and a dedicated meditation practice rooted in Vipassana. She grows herbs and creates teas, soaps and botanical care products through her own independent brand, sharing her knowledge of plants and meditation with those around her. Her empathy, compassion and feminine sensibility help shape the warmth of Hampi Sanctuary — from the spaces we share to the way people are welcomed.",
     },
   ],
 };
 
 export const closing = {
   id: "invitation",
-  headline: "Could Hampi Sanctuary be right for you?",
-  body: "You don't need to decide everything before beginning the conversation. Ask questions, tell us what you're looking for, and explore whether Hampi Sanctuary and one of its participation pathways might be a good fit.",
+  headline: "Could You Be Right For Hampi Sanctuary?",
+  body: "Takes 15 minutes to find out. Answer a few questions and see if you're a good fit.",
   cta: "Start a conversation",
 };
 

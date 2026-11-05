@@ -5,7 +5,7 @@ export function FaqSection() {
   return (
     <section id={faq.id} className="bg-mist px-5 py-20 sm:px-8 md:px-10 md:py-32">
       <div className="mx-auto max-w-275 lg:grid lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:items-start lg:gap-16 xl:gap-20">
-        <div className="reveal lg:sticky lg:top-28">
+        <div className="reveal lg:sticky lg:top-[calc(4.5rem+0.75rem)]">
           <h2 className="max-w-xs font-display text-4xl leading-[1.1] text-ink md:text-5xl">
             Frequently asked questions
           </h2>

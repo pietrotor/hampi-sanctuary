@@ -17,7 +17,6 @@ const SECTIONS = [
   "documentary",
   "everyday",
   "pathways",
-  "fit",
   "faq",
   "people",
   "invitation",
