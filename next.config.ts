@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The favicon reads this file from disk while rendering the page. Vercel
+  // serves `public` as static assets and leaves it out of the server bundle.
+  outputFileTracingIncludes: {
+    "/": ["./public/logo-mark-bone.png"],
+    "/*": ["./public/logo-mark-bone.png"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [70, 78, 90],
