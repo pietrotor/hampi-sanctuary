@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
-import { heroOptions } from "@/lib/copy";
+import { hero } from "@/lib/copy";
 import { heroStories } from "@/lib/media";
 
 export async function Hero() {
@@ -15,7 +15,7 @@ export async function Hero() {
       className="relative min-h-dvh overflow-hidden bg-ink text-paper"
       data-hero-story={index}
     >
-      <HeroSlideshow photos={photos} copyOptions={heroOptions} />
+      <HeroSlideshow photos={photos} headline={hero.headline} body={hero.body} />
     </section>
   );
 }

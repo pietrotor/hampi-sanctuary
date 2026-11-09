@@ -12,7 +12,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav, SkipLink } from "@/components/SiteNav";
 import { WhySection } from "@/components/WhySection";
 import { faq, people, site } from "@/lib/copy";
-import { heroSharePhoto, portraits } from "@/lib/media";
+import { heroSharePhoto, peoplePhoto } from "@/lib/media";
 import { siteUrl } from "@/lib/seo";
 
 export default function Home() {
@@ -21,7 +21,8 @@ export default function Home() {
   const andreaId = `${siteUrl}#person-andrea`;
   const logoUrl = new URL("/logo-lockup-green.png", siteUrl).toString();
   const heroImageUrl = new URL(heroSharePhoto.src, siteUrl).toString();
-  const [daniel, andrea] = people.portraits;
+  const [daniel, andrea] = people.profiles;
+  const peopleImageUrl = new URL(peoplePhoto.src, siteUrl).toString();
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -51,7 +52,7 @@ export default function Home() {
         "@id": danielId,
         name: daniel.name,
         description: daniel.bio,
-        image: new URL(portraits[0].src, siteUrl).toString(),
+        image: peopleImageUrl,
         jobTitle: "Founder",
         worksFor: { "@id": organizationId },
       },
@@ -60,7 +61,7 @@ export default function Home() {
         "@id": andreaId,
         name: andrea.name,
         description: andrea.bio,
-        image: new URL(portraits[1].src, siteUrl).toString(),
+        image: peopleImageUrl,
         worksFor: { "@id": organizationId },
       },
       {

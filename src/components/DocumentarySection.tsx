@@ -38,7 +38,7 @@ export function DocumentarySection() {
             share="documentary-morph"
             default="none"
           >
-            <span className="image-reveal relative block overflow-hidden">
+            <span className="image-reveal relative -mx-5 block overflow-hidden sm:-mx-8 md:mx-0">
               <SitePhoto
                 photo={documentaryStill}
                 alt=""

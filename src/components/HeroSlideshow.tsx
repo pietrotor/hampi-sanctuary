@@ -28,24 +28,16 @@ const FADE_MS = 2000;
 
 type Props = {
   photos: Photo[];
-  copyOptions: readonly [{
-    id: string;
-    label: string;
-    headline: string;
-    body: string;
-  }, ...{
-    id: string;
-    label: string;
-    headline: string;
-    body: string;
-  }[]];
+  headline: string;
+  body: string;
   /** Tall crop used when the visit opens on the running-with-dogs frame. */
   mobileFirstPhoto?: Photo;
 };
 
 export function HeroSlideshow({
   photos,
-  copyOptions,
+  headline,
+  body,
   mobileFirstPhoto,
 }: Props) {
   const [frame, setFrame] = useState({
@@ -53,7 +45,6 @@ export function HeroSlideshow({
     furthest: 0,
     releasing: null as number | null,
   });
-  const [copySelection, setCopySelection] = useState<string>("auto");
   // Nothing beyond the first photograph is mounted until its bytes arrive,
   // so later photography cannot compete with LCP on a slow connection.
   const [warm, setWarm] = useState(false);
@@ -100,12 +91,6 @@ export function HeroSlideshow({
   const opener = photos[0];
   const keepsZoom = (index: number) =>
     index === frame.index || index === frame.releasing;
-  const activeCopy =
-    copySelection === "auto"
-      ? copyOptions[frame.index % copyOptions.length]
-      : copyOptions.find((option) => option.id === copySelection) ??
-        copyOptions[0];
-
   return (
     <>
       <div className="hero-image absolute inset-0" aria-hidden="true">
@@ -150,43 +135,13 @@ export function HeroSlideshow({
         </div>
 
         <div className="mt-auto max-w-3xl">
-          <div
-            key={activeCopy.id}
-            className="hero-copy hero-copy-swap flex min-h-68 flex-col justify-end sm:min-h-72 md:min-h-80"
-            aria-live={copySelection === "auto" ? "off" : "polite"}
-          >
+          <div className="hero-copy flex min-h-68 flex-col justify-end sm:min-h-72 md:min-h-80">
             <h1 className="font-display text-[clamp(2.55rem,10vw,4.5rem)] leading-[1.02] text-balance md:text-7xl">
-              {activeCopy.headline}
+              {headline}
             </h1>
             <p className="mt-5 max-w-160 font-body text-base leading-7 text-paper/95 sm:mt-6 sm:leading-8 md:text-lg">
-              {activeCopy.body}
+              {body}
             </p>
-          </div>
-
-          <div
-            className="hero-copy-review mt-5 flex flex-wrap items-center gap-2 sm:mt-6"
-            role="group"
-            aria-label="Hero copy preview"
-          >
-            {copyOptions.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className="hero-copy-control"
-                aria-pressed={copySelection === option.id}
-                onClick={() => setCopySelection(option.id)}
-              >
-                {option.label}
-              </button>
-            ))}
-            <button
-              type="button"
-              className="hero-copy-control"
-              aria-pressed={copySelection === "auto"}
-              onClick={() => setCopySelection("auto")}
-            >
-              Auto
-            </button>
           </div>
         </div>
       </div>

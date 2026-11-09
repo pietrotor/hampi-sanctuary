@@ -54,7 +54,7 @@ export function PathwayOffers() {
         role="tablist"
         aria-label="Participation pathways"
         onKeyDown={onKeyDown}
-        className="grid gap-2 md:grid-cols-3 md:gap-6"
+        className="grid gap-2 px-5 sm:px-0 md:grid-cols-3 md:gap-6"
       >
         {pathways.items.map((item, index) => {
           const active = index === selected;
@@ -110,13 +110,10 @@ export function PathwayOffers() {
                   className="h-auto w-full"
                 />
               </figure>
-              <div className="mt-6 max-w-[65ch] lg:mt-0">
+              <div className="mt-6 max-w-[65ch] px-5 sm:px-0 lg:mt-0">
                 <h3 className="font-display text-3xl leading-[1.1] text-ink md:text-5xl">
                   {item.title}
                 </h3>
-                <p className="mt-3 font-body text-lg italic leading-snug text-ink-soft md:text-xl">
-                  {item.line}
-                </p>
                 <div className="mt-5 space-y-4 font-body text-base leading-7 text-ink-soft md:text-lg md:leading-8">
                   {item.paragraphs.map((paragraph) => (
                     <p key={paragraph} className="text-pretty">

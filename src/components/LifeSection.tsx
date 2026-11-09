@@ -23,7 +23,7 @@ export function LifeSection() {
             </div>
           </div>
         </div>
-        <figure className="image-reveal">
+        <figure className="image-reveal -mx-5 sm:-mx-8 md:mx-0">
           <SitePhoto
             photo={lifePhoto}
             sizes="(min-width: 1024px) 32rem, 100vw"

@@ -283,13 +283,6 @@ export const plantMedicinePhoto: Photo = {
 
 export const pathwayPhotos: Photo[] = [
   {
-    src: "/photos/9- volunteer.png",
-    alt: "A person carrying freshly cut plants through the garden",
-    width: 1688,
-    height: 932,
-    position: "center",
-  },
-  {
     src: "/photos/garden-work.webp",
     alt: "Working from a chair in the garden at Hampi Sanctuary",
     width: 1760,
@@ -301,6 +294,13 @@ export const pathwayPhotos: Photo[] = [
     alt: "A woman resting among yellow water lilies in the pond",
     width: 1692,
     height: 930,
+    position: "center",
+  },
+  {
+    src: "/photos/9- volunteer.png",
+    alt: "A person carrying freshly cut plants through the garden",
+    width: 1688,
+    height: 932,
     position: "center",
   },
 ];
@@ -350,21 +350,13 @@ export const everydayCategoryPhotos: Photo[] = [
   },
 ];
 
-export const portraits: Photo[] = [
-  {
-    src: "/photos/daniel-portrait.webp",
-    alt: "Daniel resting in the garden with a dog",
-    width: 990,
-    height: 1238,
-    position: "center 42%",
-  },
-  {
-    src: "/photos/andrea-portrait.webp",
-    alt: "Andrea in the gardens at Hampi Sanctuary",
-    width: 800,
-    height: 1000,
-  },
-];
+export const peoplePhoto: Photo = {
+  src: "/photos/daniel-andrea.webp",
+  alt: "Daniel and Andrea together in the garden at Hampi Sanctuary",
+  width: 1086,
+  height: 1448,
+  position: "center 42%",
+};
 
 /** Every site photograph, once each — for the image sitemap. */
 export const sitePhotos: Photo[] = [
@@ -377,7 +369,7 @@ export const sitePhotos: Photo[] = [
   ...everydayCategoryPhotos,
   ...pathwayPhotos,
   plantMedicinePhoto,
-  ...portraits,
+  peoplePhoto,
 ].filter(
   (photo, index, list) =>
     list.findIndex((entry) => entry.src === photo.src) === index,
