@@ -124,7 +124,7 @@ export function EverydayCards({ categories, photos }: Props) {
 
   return (
     <>
-      <ul className="reveal-sequence mt-10 grid gap-2 md:mt-14 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-3 xl:gap-x-16">
+      <ul className="reveal-sequence mt-10 grid gap-2 md:mt-14 md:grid-cols-2 md:gap-x-6 md:gap-y-2 lg:gap-x-10 lg:gap-y-3 xl:gap-x-16">
         {categories.map((category, index) => (
           <li key={category.title}>
             <button
@@ -189,7 +189,7 @@ export function EverydayCards({ categories, photos }: Props) {
       >
         {activeCategory && activePhoto ? (
           <>
-            <div className="everyday-dialog-scroll pointer-events-none absolute inset-0 flex flex-col overflow-y-auto px-4 py-4 sm:items-center sm:justify-center sm:px-8 sm:pt-4 sm:pb-30">
+            <div className="everyday-dialog-scroll pointer-events-none absolute inset-0 flex flex-col overflow-y-auto px-4 py-4 sm:items-center sm:justify-center sm:px-8 sm:pt-4 sm:pb-56 lg:pb-30">
               <div
                 className={`everyday-dialog-panel pointer-events-auto relative w-full overflow-visible bg-transparent sm:my-auto sm:max-h-full sm:min-h-0 sm:overflow-x-hidden sm:overflow-y-auto sm:rounded-2xl sm:bg-paper ${
                   isPortrait ? "max-w-4xl" : "max-w-6xl"
@@ -292,7 +292,7 @@ export function EverydayCards({ categories, photos }: Props) {
             </div>
 
             <div
-              className="everyday-dialog-rail absolute bottom-4 left-1/2 hidden w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 gap-2 overflow-x-auto rounded-xl bg-mist p-3 shadow-[0_0.75rem_2rem_rgb(34_48_38/0.18)] sm:flex"
+              className="everyday-dialog-rail absolute bottom-4 left-1/2 hidden w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 gap-2 rounded-xl bg-mist p-3 shadow-[0_0.75rem_2rem_rgb(34_48_38/0.18)] sm:grid sm:grid-cols-3 lg:grid-cols-6"
               aria-label="Explore everyday life"
             >
               {categories.map((category, index) => {
@@ -303,14 +303,14 @@ export function EverydayCards({ categories, photos }: Props) {
                     type="button"
                     onClick={() => selectCategory(index)}
                     aria-pressed={selected}
-                    className={`group flex min-h-16 min-w-36 cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-left transition-[background-color,color,transform] duration-200 active:scale-[0.98] ${
+                    className={`group flex min-h-16 min-w-0 cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-left transition-[background-color,color,transform] duration-200 active:scale-[0.98] ${
                       selected
                         ? "bg-accent text-paper"
                         : "bg-paper/60 text-ink hover:bg-paper"
                     }`}
                   >
                     <EverydayIcon index={index} compact inverse={selected} />
-                    <span className="font-ui text-sm leading-5">
+                    <span className="font-ui text-sm leading-5 lg:whitespace-nowrap">
                       {category.title}
                     </span>
                   </button>
