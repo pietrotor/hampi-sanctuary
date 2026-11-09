@@ -109,6 +109,9 @@ JOBS = [
     Job("garden-work", "web-dani/IMG_1342.jpg", 1760, tone=PORTRAIT),
     Job("quiet-meditation", "DSC03073.JPG", 1600, tone={**PORTRAIT, "levels": 0.2}),
     # Portraits: small on the page, so no upscaling.
+    # Shared photo of Daniel and Andrea for the People section. Original is
+    # 1086px wide, so it is graded but not restored or enlarged.
+    Job("daniel-andrea", "ultimas-imagenes-hampy/Daniel y Andrea.png", 1086, tone=PORTRAIT),
     Job("daniel-portrait", "web-dani/IMG_2360.jpg", 990, crop=(0, 20, 990, 1238), tone=PORTRAIT),
     Job("andrea-portrait", "_MG_5175.JPG", 800, crop=(981, 430, 800, 1000), tone={**PORTRAIT, "denoise": 0.6}),
 ]
