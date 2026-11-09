@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getImageProps } from "next/image";
 import { EverydayMobileCarousel } from "@/components/EverydayMobileCarousel";
 import { SitePhoto } from "@/components/SitePhoto";
 import type { Photo } from "@/lib/media";
@@ -15,14 +16,50 @@ type Props = {
   photos: Photo[];
 };
 
+const warmedPhotoKeys = new Set<string>();
+const warmedPhotos: HTMLImageElement[] = [];
+
+function warmEverydayPhotos(photos: readonly Photo[], mobile: boolean) {
+  for (const photo of photos) {
+    const portrait = photo.height > photo.width;
+    const { props } = getImageProps({
+      alt: "",
+      height: photo.height,
+      quality: 78,
+      sizes: mobile
+        ? "100vw"
+        : portrait
+          ? "(min-width: 768px) 44vw, calc(100vw - 2rem)"
+          : "(min-width: 768px) 58vw, calc(100vw - 2rem)",
+      src: photo.src,
+      width: photo.width,
+    });
+    const key = `${props.src}\n${props.srcSet ?? ""}\n${props.sizes ?? ""}`;
+    if (warmedPhotoKeys.has(key)) continue;
+    warmedPhotoKeys.add(key);
+
+    const img = new window.Image();
+    img.decoding = "async";
+    img.fetchPriority = "low";
+    if (props.srcSet) img.srcset = props.srcSet;
+    if (props.sizes) img.sizes = props.sizes;
+    img.src = props.src;
+    img.decode().catch(() => {});
+    warmedPhotos.push(img);
+  }
+}
+
 export function EverydayCards({ categories, photos }: Props) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const slide = useRef<HTMLDivElement>(null);
-  const previousActiveIndex = useRef<number | null>(null);
-  const navigationDirection = useRef(1);
   const closeTimer = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [compact, setCompact] = useState(false);
+  // Dialog content only exists after a click, so reading the viewport on the
+  // first client render cannot cause a hydration mismatch.
+  const [compact, setCompact] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 639px)").matches,
+  );
   const activeCategory =
     activeIndex === null ? null : categories[activeIndex];
   const activePhoto = activeIndex === null ? null : photos[activeIndex];
@@ -42,6 +79,13 @@ export function EverydayCards({ categories, photos }: Props) {
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    warmEverydayPhotos(
+      photos,
+      window.matchMedia("(max-width: 639px)").matches,
+    );
+  }, [photos]);
 
   useEffect(() => {
     if (activeIndex === null || dialog.current?.open) return;
@@ -67,46 +111,6 @@ export function EverydayCards({ categories, photos }: Props) {
     };
   }, [activeIndex]);
 
-  useLayoutEffect(() => {
-    if (activeIndex === null) {
-      previousActiveIndex.current = null;
-      return;
-    }
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile = window.matchMedia("(max-width: 639px)").matches;
-
-    if (
-      previousActiveIndex.current === null ||
-      previousActiveIndex.current === activeIndex ||
-      reduced ||
-      mobile
-    ) {
-      previousActiveIndex.current = activeIndex;
-      return;
-    }
-
-    const node = slide.current;
-    node?.getAnimations().forEach((animation) => animation.cancel());
-    if (node) node.style.transform = "";
-    node?.animate(
-      [
-        {
-          opacity: 0.72,
-          transform: `translateX(${navigationDirection.current * 18}px)`,
-        },
-        { opacity: 1, transform: "translateX(0)" },
-      ],
-      {
-        duration: 280,
-        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-        fill: "both",
-      },
-    );
-
-    previousActiveIndex.current = activeIndex;
-  }, [activeIndex]);
-
   const close = () => {
     const node = dialog.current;
     if (!node || node.dataset.closing === "true") return;
@@ -114,11 +118,7 @@ export function EverydayCards({ categories, photos }: Props) {
     node.dataset.closing = "true";
     closeTimer.current = window.setTimeout(() => node.close(), 320);
   };
-  const selectCategory = (index: number, direction?: number) => {
-    if (activeIndex !== null) {
-      navigationDirection.current =
-        direction ?? (index > activeIndex ? 1 : -1);
-    }
+  const selectCategory = (index: number) => {
     setActiveIndex(index);
   };
 
@@ -178,11 +178,11 @@ export function EverydayCards({ categories, photos }: Props) {
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft") {
             event.preventDefault();
-            selectCategory(previousIndex, -1);
+            selectCategory(previousIndex);
           }
           if (event.key === "ArrowRight") {
             event.preventDefault();
-            selectCategory(nextIndex, 1);
+            selectCategory(nextIndex);
           }
         }}
         className="everyday-dialog m-0 h-dvh max-h-none w-full max-w-none overflow-hidden border-0 bg-transparent p-0 text-ink"
@@ -211,7 +211,7 @@ export function EverydayCards({ categories, photos }: Props) {
               </svg>
             </button>
 
-            {activeIndex !== null ? (
+            {compact && activeIndex !== null ? (
               <EverydayMobileCarousel
                 categories={categories}
                 photos={photos}
@@ -222,54 +222,72 @@ export function EverydayCards({ categories, photos }: Props) {
               />
             ) : null}
 
-            <div
-              ref={slide}
-              className={`hidden sm:grid ${
-                isPortrait
-                  ? "items-center md:grid-cols-[auto_minmax(22rem,1fr)]"
-                  : "items-stretch md:grid-cols-[minmax(0,1.2fr)_minmax(22rem,0.8fr)]"
-              }`}
-            >
+            {compact ? null : (
               <div
-                className={`relative grid place-items-center overflow-hidden md:h-full ${
-                  isPortrait ? "bg-deep md:bg-transparent" : ""
+                className={`grid ${
+                  isPortrait
+                    ? "items-center md:grid-cols-[auto_minmax(22rem,1fr)]"
+                    : "items-stretch md:grid-cols-[minmax(0,1.2fr)_minmax(22rem,0.8fr)]"
                 }`}
               >
-                {isPortrait ? (
-                  <SitePhoto
-                    photo={activePhoto}
-                    alt=""
-                    sizes="100vw"
-                    quality={45}
-                    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl md:hidden"
-                  />
-                ) : null}
-                <SitePhoto
-                  photo={activePhoto}
-                  sizes={
-                    isPortrait
-                      ? "(min-width: 768px) 44vw, calc(100vw - 2rem)"
-                      : "(min-width: 768px) 58vw, calc(100vw - 2rem)"
-                  }
-                  className={
-                    isPortrait
-                      ? "relative h-auto w-full object-contain md:h-[min(34rem,calc(100dvh-10rem))] md:w-auto md:max-w-full"
-                      : "h-auto w-full object-cover md:h-full"
-                  }
-                />
-              </div>
-              <div className="min-h-0 overflow-y-auto px-6 py-8 sm:px-9 sm:py-10 md:px-10 lg:px-12">
-                <h3
-                  id={compact ? undefined : "everyday-dialog-title"}
-                  className="max-w-sm font-display text-4xl leading-[1.05] text-ink md:text-5xl"
+                <div
+                  className={`relative grid place-items-center overflow-hidden md:h-full ${
+                    isPortrait ? "bg-deep md:bg-transparent" : ""
+                  }`}
                 >
-                  {activeCategory.title}
-                </h3>
-                <p className="mt-5 max-w-lg text-pretty font-body text-lg leading-8 text-ink-soft md:text-xl md:leading-9">
-                  {activeCategory.body}
-                </p>
+                  {isPortrait ? (
+                    <SitePhoto
+                      photo={activePhoto}
+                      alt=""
+                      sizes="100vw"
+                      quality={70}
+                      loading="eager"
+                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl md:hidden"
+                    />
+                  ) : null}
+                  {photos.map((photo, photoIndex) => {
+                    const selected = photoIndex === activeIndex;
+                    const portrait = photo.height > photo.width;
+                    return (
+                      <SitePhoto
+                        key={photo.src}
+                        photo={photo}
+                        alt={selected ? undefined : ""}
+                        loading="eager"
+                        sizes={
+                          portrait
+                            ? "(min-width: 768px) 44vw, calc(100vw - 2rem)"
+                            : "(min-width: 768px) 58vw, calc(100vw - 2rem)"
+                        }
+                        className={
+                          selected
+                            ? portrait
+                              ? "relative z-10 h-auto w-full object-contain md:h-[min(34rem,calc(100dvh-10rem))] md:w-auto md:max-w-full"
+                              : "relative z-10 h-auto w-full object-cover md:h-full"
+                            : "pointer-events-none absolute inset-0 z-0 h-full w-full object-cover opacity-0"
+                        }
+                        style={
+                          selected && portrait
+                            ? { aspectRatio: `${photo.width} / ${photo.height}` }
+                            : undefined
+                        }
+                      />
+                    );
+                  })}
+                </div>
+                <div className="min-h-0 overflow-y-auto px-6 py-8 sm:px-9 sm:py-10 md:px-10 lg:px-12">
+                  <h3
+                    id="everyday-dialog-title"
+                    className="max-w-sm font-display text-4xl leading-[1.05] text-ink md:text-5xl"
+                  >
+                    {activeCategory.title}
+                  </h3>
+                  <p className="mt-5 max-w-lg text-pretty font-body text-lg leading-8 text-ink-soft md:text-xl md:leading-9">
+                    {activeCategory.body}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
               </div>
             </div>
 

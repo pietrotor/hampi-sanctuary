@@ -89,15 +89,28 @@ export function EverydayMobileCarousel({
               style={{ height: "auto" }}
               inert={slide !== index}
             >
-              <article className="overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]">
-                <div className="relative">
+              <article
+                className="overflow-hidden rounded-2xl bg-paper shadow-[0_1rem_2.4rem_rgb(34_48_38/0.16)]"
+                style={{ containerType: "inline-size" }}
+              >
+                <div
+                  className="relative w-full"
+                  style={
+                    portrait
+                      ? undefined
+                      : {
+                          height: `min(38dvh, calc(100cqw * ${photo.height} / ${photo.width}))`,
+                        }
+                  }
+                >
                   <SitePhoto
                     photo={photo}
                     sizes="100vw"
+                    loading="eager"
                     className={
                       portrait
                         ? "h-[clamp(8rem,26dvh,14rem)] w-full object-cover object-center"
-                        : "h-auto max-h-[38dvh] w-full object-cover object-center"
+                        : "absolute inset-0 h-full w-full object-cover object-center"
                     }
                   />
                   <button
